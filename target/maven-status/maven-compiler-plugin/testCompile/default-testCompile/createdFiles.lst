@@ -1,0 +1,10 @@
+pageobjects\InventoryPage.class
+tests\InventoryTests.class
+tests\LoginTests.class
+pageobjects\ProductPage.class
+utils\Utils.class
+pageobjects\LoginPage.class
+tests\BaseTest.class
+pageobjects\MenuPage.class
+tests\ProductTest.class
+pageobjects\BasePage.class
