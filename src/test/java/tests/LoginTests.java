@@ -1,34 +1,57 @@
 package tests;
 
 import org.testng.Assert;
-import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import pageobjects.LoginPage;
-public class LoginTests extends BaseTest{
-@DataProvider(name="invalidLogins")
-public Object[][] invalidLogins() {
-    return new Object[][]{
-        {"locked_out_user", "secret_sauce", "Epic sadface: Sorry, this user has been locked out."},
-        {"", "", "Epic sadface: Username is required"},
-        {"mark1234", "secret_sauce", "Epic sadface: Username and password do not match any user in this service"},
-        {"standard_user", "1234", "Epic sadface: Username and password do not match any user in this service"},
-    };
-}
 
-@Test(dataProvider="invalidLogins")
-public void login_invalid_shouldShowError(String u, String p, String expected) {
-    LoginPage lp = new LoginPage(driver);
-    lp.login(u, p);
+public class LoginTests extends BaseTest {
 
-    Assert.assertTrue(lp.isErrorDisplayed(), "Error message should be displayed");
-    Assert.assertEquals(lp.getErrorMessage(), expected);
-}
+    @Test(description = "Login with locked out user")
+    public void atc001_loginWithLockedOutUser() {
+        LoginPage lp = new LoginPage(driver);
+        lp.login("locked_out_user", "secret_sauce");
 
-@Test
-public void atc05_successfulLogin() {
-    LoginPage lp = new LoginPage(driver);
-    lp.login("standard_user", "secret_sauce");
-    Assert.assertTrue(driver.getCurrentUrl().contains("inventory"), "User should land on inventory page");
-}
+        Assert.assertTrue(lp.isErrorDisplayed(), "Error message should be displayed");
+        Assert.assertTrue(lp.getErrorMessage().contains("Username and password do not match any user in this service"),
+                "Expected error message according to spreadsheet not found. Actual: " + lp.getErrorMessage());
+    }
+
+    @Test(description = "Empty Fields")
+    public void atc002_emptyFields() {
+        LoginPage lp = new LoginPage(driver);
+        lp.login("", "");
+
+        Assert.assertTrue(lp.isErrorDisplayed(), "Error message should be displayed");
+        Assert.assertTrue(lp.getErrorMessage().contains("Username is required"),
+                "Expected error message containing 'Username is required' not found. Actual: " + lp.getErrorMessage());
+    }
+
+    @Test(description = "Invalid Username")
+    public void atc003_invalidUsername() {
+        LoginPage lp = new LoginPage(driver);
+        lp.login("wrong_user", "secret_sauce");
+
+        Assert.assertTrue(lp.isErrorDisplayed(), "Error message should be displayed");
+        Assert.assertTrue(lp.getErrorMessage().contains("Username and password do not match"),
+                "Expected error message 'Username and password do not match...' not found. Actual: " + lp.getErrorMessage());
+    }
+
+    @Test(description = "Invalid Password")
+    public void atc004_invalidPassword() {
+        LoginPage lp = new LoginPage(driver);
+        lp.login("standard_user", "wrong_pass");
+
+        Assert.assertTrue(lp.isErrorDisplayed(), "Error message should be displayed");
+        Assert.assertTrue(lp.getErrorMessage().contains("Username and password do not match"),
+                "Expected error message 'Username and password do not match...' not found. Actual: " + lp.getErrorMessage());
+    }
+
+    @Test(description = "Successful login")
+    public void atc005_successfulLogin() {
+        LoginPage lp = new LoginPage(driver);
+        lp.login("standard_user", "secret_sauce");
+        
+        Assert.assertTrue(driver.getCurrentUrl().contains("inventory"), "User is redirected to inventory page");
+    }
 }

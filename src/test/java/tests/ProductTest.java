@@ -16,7 +16,7 @@ public class ProductTest extends BaseTest {
         Assert.assertTrue(new InventoryPage(driver).isLoaded(), "Inventory page should load after login");
     }
 
-    @Test(description = "Open product details and verify it loads", testName = "Verifying opened product details")
+    @Test(description = "Open product details")
     public void atc001_openProductDetails() {
         InventoryPage ip = new InventoryPage(driver);
 
@@ -27,26 +27,26 @@ public class ProductTest extends BaseTest {
         Assert.assertEquals(pdp.getProductTitle(), expectedProduct, "Wrong product was opened");
     }
     
-    @Test
-    public void atc002_addRemoveFromProductPage_updatesBadge() {
+    @Test(description = "Add and remove item from Cart")
+    public void atc002_addAndRemoveItemFromCart() {
         InventoryPage ip = new InventoryPage(driver);
         ProductPage pdp = ip.openProduct("Sauce Labs Backpack");
 
         int before = pdp.getCartBadgeCount();
         pdp.addToCart();
-        Assert.assertEquals(pdp.getCartBadgeCount(), before + 1);
+        Assert.assertEquals(pdp.getCartBadgeCount(), before + 1, "Product is added to cart, cart counter is increased");
 
         pdp.removeFromCart();
-        Assert.assertEquals(pdp.getCartBadgeCount(), before);
+        Assert.assertEquals(pdp.getCartBadgeCount(), before, "Product is removed from cart, cart counter is decreased");
     }
 
-    @Test
-    public void atc003_backToProducts_returnsToInventory() {
+    @Test(description = "Navigate back to products")
+    public void atc003_navigateBackToProducts() {
         InventoryPage ip = new InventoryPage(driver);
         ProductPage pdp = ip.openProduct("Sauce Labs Backpack");
 
         pdp.backToInventory();
-        Assert.assertTrue(new InventoryPage(driver).isLoaded(), "Should return to inventory page");
+        Assert.assertTrue(new InventoryPage(driver).isLoaded(), "User is redirected back to the inventory page");
     }
 
 }

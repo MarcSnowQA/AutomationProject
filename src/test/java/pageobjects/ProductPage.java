@@ -23,10 +23,18 @@ public class ProductPage extends MenuPage {
         super(driver);
     }
 
+    /**
+     * Waits until the specific Product Page details (like the product title) are visible on screen.
+     */
     public void waitUntilLoaded() {
         wait.until(ExpectedConditions.visibilityOf(productTitle));
     }
 
+    /**
+     * Verifies whether the Product Page is fully loaded.
+     *
+     * @return true if loaded and visible, false otherwise.
+     */
     public boolean isLoaded() {
         try {
             waitUntilLoaded();
@@ -36,11 +44,19 @@ public class ProductPage extends MenuPage {
         }
     }
 
+    /**
+     * Fetches the large product title displayed on the Product Details page.
+     *
+     * @return The product name as a String.
+     */
     public String getProductTitle() {
         waitUntilLoaded();
         return getText(productTitle);
     }
 
+    /**
+     * Clicks the "Add to cart" button if the product is not already in the cart.
+     */
     public void addToCart() {
         waitUntilLoaded();
         if (addRemoveBtn.getText().trim().equalsIgnoreCase("Add to cart")) {
@@ -48,6 +64,9 @@ public class ProductPage extends MenuPage {
         }
     }
 
+    /**
+     * Clicks the "Remove" button if the product is currently in the cart.
+     */
     public void removeFromCart() {
         waitUntilLoaded();
         if (addRemoveBtn.getText().trim().equalsIgnoreCase("Remove")) {
@@ -55,6 +74,11 @@ public class ProductPage extends MenuPage {
         }
     }
 
+    /**
+     * Reads the floating shopping cart badge count.
+     *
+     * @return Integer representing the amount of items in the cart (0 if badge is not shown).
+     */
     public int getCartBadgeCount() {
         try {
             return Integer.parseInt(cartBadge.getText().trim());
@@ -63,6 +87,9 @@ public class ProductPage extends MenuPage {
         }
     }
 
+    /**
+     * Navigates back to the Inventory (Products List) page.
+     */
     public void backToInventory() {
         click(backToInventory);
     }

@@ -6,6 +6,8 @@
       <class name="tests.LoginTests"/>
       <class name="tests.InventoryTests"/>
       <class name="tests.ProductTest"/>
+      <class name="tests.CheckoutTests"/>
+      <class name="tests.MenuTests"/>
     </classes>
   </test>
 </suite>

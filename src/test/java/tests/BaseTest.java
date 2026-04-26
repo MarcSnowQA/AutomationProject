@@ -38,9 +38,19 @@ public abstract class BaseTest {
         // Screenshot only on failure
         if (result.getStatus() == ITestResult.FAILURE && driver != null) {
             takeScreenshot(result.getMethod().getMethodName());
+            attachScreenshotToAllure();
         }
         if (driver != null) {
             driver.quit();
+        }
+    }
+
+    @io.qameta.allure.Attachment(value = "Screenshot on Failure", type = "image/png")
+    public byte[] attachScreenshotToAllure() {
+        try {
+            return ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
+        } catch (WebDriverException e) {
+            return new byte[0];
         }
     }
 

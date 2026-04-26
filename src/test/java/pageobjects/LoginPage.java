@@ -22,19 +22,33 @@ public class LoginPage extends BasePage {
         super(driver);
     }
 
+    /**
+     * Performs login operation with the provided credentials.
+     * Populates username and password fields, then clicks the login button.
+     *
+     * @param username the username to input
+     * @param password the password to input
+     */
     public void login(String username, String password) {
         type(userName, username);
         type(pwd, password);
         click(loginBtn);
-        // No sleep here. Tests will assert next state:
-        // - inventory page loaded (positive)
-        // - error shown (negative)
     }
 
+    /**
+     * Retrieves the text of the error message displayed on the login page.
+     *
+     * @return String containing the error text, trimmed of whitespace
+     */
     public String getErrorMessage() {
-        return getText(errMsg); // waits visible + trims
+        return getText(errMsg);
     }
 
+    /**
+     * Checks if the login error message element is currently displayed on the page.
+     *
+     * @return true if error message is visible, false otherwise
+     */
     public boolean isErrorDisplayed() {
         return isDisplayedSafe(errMsg);
     }

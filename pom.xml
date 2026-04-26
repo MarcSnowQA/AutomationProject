@@ -126,6 +126,15 @@
                     </systemPropertyVariables>
                 </configuration>
             </plugin>
+            <!-- https://mvnrepository.com/artifact/io.qameta.allure/allure-maven -->
+            <plugin>
+                <groupId>io.qameta.allure</groupId>
+                <artifactId>allure-maven</artifactId>
+                <version>2.12.0</version>
+                <configuration>
+                    <reportVersion>2.24.1</reportVersion>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 </project>
