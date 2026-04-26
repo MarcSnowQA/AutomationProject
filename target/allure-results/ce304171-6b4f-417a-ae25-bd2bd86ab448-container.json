@@ -1,1 +1,0 @@
-{"uuid":"ce304171-6b4f-417a-ae25-bd2bd86ab448","name":"tests.MenuTests.login","children":["03e2b596-846d-42af-9254-1176d066aa08"],"description":"","befores":[{"name":"login","status":"passed","stage":"finished","description":"","steps":[],"attachments":[],"parameters":[],"start":1777193010327,"stop":1777193010850}],"afters":[],"start":1777193010327,"stop":1777193010850}

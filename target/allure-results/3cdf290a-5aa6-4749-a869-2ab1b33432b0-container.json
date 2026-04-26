@@ -1,1 +1,0 @@
-{"uuid":"3cdf290a-5aa6-4749-a869-2ab1b33432b0","name":"tests.CheckoutTests.login","children":["2a81b746-0a1d-4a36-bc2a-463d57100ea6"],"description":"","befores":[{"name":"login","status":"passed","stage":"finished","description":"","steps":[],"attachments":[],"parameters":[],"start":1777192975745,"stop":1777192976852}],"afters":[],"start":1777192975745,"stop":1777192976852}
