@@ -31,7 +31,7 @@ public class CheckoutTests extends BaseTest {
 
         CartPage cp = new CartPage(driver);
         CheckoutStepOnePage step1 = cp.clickCheckout();
-        
+
         CheckoutStepTwoPage step2 = step1.continueToOverview("First", "Last", "12345");
         Assert.assertTrue(step2.isLoaded(), "Overview page should load");
 
@@ -51,7 +51,7 @@ public class CheckoutTests extends BaseTest {
 
         CartPage cp = new CartPage(driver);
         CheckoutStepOnePage step1 = cp.clickCheckout();
-        
+
         step1.continueToOverview("", "", "");
         Assert.assertTrue(step1.getErrorMessage().contains("First Name is required"));
     }
@@ -83,7 +83,7 @@ public class CheckoutTests extends BaseTest {
 
         CheckoutStepOnePage step1 = cp.clickCheckout();
         CheckoutStepTwoPage step2 = step1.continueToOverview("Test", "User", "00000");
-        
+
         double itemTotal = step2.getItemTotal();
         double expectedItemTotal = 29.99 + 9.99; // Backpack + Bike Light
         Assert.assertEquals(itemTotal, expectedItemTotal, 0.01, "Item Total equals sum of item prices");
@@ -103,7 +103,7 @@ public class CheckoutTests extends BaseTest {
 
         CartPage cp = new CartPage(driver);
         CheckoutStepOnePage step1 = cp.clickCheckout();
-        
+
         step1.continueToOverview("First", "", "12345");
         Assert.assertTrue(step1.getErrorMessage().contains("Last Name is required"));
     }
@@ -115,7 +115,7 @@ public class CheckoutTests extends BaseTest {
 
         CartPage cp = new CartPage(driver);
         CheckoutStepOnePage step1 = cp.clickCheckout();
-        
+
         step1.continueToOverview("First", "Last", "");
         Assert.assertTrue(step1.getErrorMessage().contains("Postal Code is required"));
     }
@@ -127,7 +127,7 @@ public class CheckoutTests extends BaseTest {
 
         CartPage cp = new CartPage(driver);
         CheckoutStepOnePage step1 = cp.clickCheckout();
-        
+
         cp = step1.clickCancel();
         Assert.assertTrue(cp.isLoaded(), "User is returned to Cart page");
         Assert.assertEquals(cp.getCartItemsCount(), 1, "Previously added items are still present");
@@ -140,10 +140,10 @@ public class CheckoutTests extends BaseTest {
 
         CartPage cp = new CartPage(driver);
         CheckoutStepOnePage step1 = cp.clickCheckout();
-        
+
         CheckoutStepTwoPage step2 = step1.continueToOverview("First", "Last", "12345");
         InventoryPage ip = step2.clickCancel();
-        
+
         Assert.assertTrue(ip.isLoaded(), "User is returned to Inventory page");
         Assert.assertEquals(getCartBadgeCount(), 1, "Cart badge still reflects items in cart");
     }
@@ -158,12 +158,13 @@ public class CheckoutTests extends BaseTest {
 
         CartPage cp = new CartPage(driver);
         CheckoutStepOnePage step1 = cp.clickCheckout();
-        
-        CheckoutStepTwoPage step2 = step1.continueToOverview("John", "Doe", "90210");
+
+        CheckoutStepTwoPage step2 = step1.continueToOverview("Mark", "Snow", "12345");
         
         double expectedTotal = 29.99 + 9.99 + 15.99;
         Assert.assertEquals(step2.getItemTotal(), expectedTotal, 0.01, "Item Total equals sum of prices");
-        Assert.assertEquals(step2.getTotal(), step2.getItemTotal() + step2.getTax(), 0.01, "Total matches Item Total + Tax");
+        Assert.assertEquals(step2.getTotal(), step2.getItemTotal() + step2.getTax(), 0.01,
+                "Total matches Item Total + Tax");
     }
 
     @Test(description = "Finish order clears the cart")
@@ -176,11 +177,11 @@ public class CheckoutTests extends BaseTest {
         CheckoutStepOnePage step1 = cp.clickCheckout();
         CheckoutStepTwoPage step2 = step1.continueToOverview("A", "B", "C");
         CheckoutCompletePage complete = step2.clickFinish();
-        
+
         ip = complete.clickBackHome();
         ip.openCart();
         cp = new CartPage(driver);
-        
+
         Assert.assertEquals(cp.getCartItemsCount(), 0, "Cart is empty after completing checkout");
         Assert.assertEquals(getCartBadgeCount(), 0, "Cart badge is 0/hidden");
     }
@@ -188,9 +189,11 @@ public class CheckoutTests extends BaseTest {
     @Test(description = "User cannot skip Step One and open Overview directly")
     public void atc011_cannotSkipStepOne() {
         driver.get("https://www.saucedemo.com/checkout-step-two.html");
-        Assert.assertTrue(driver.getCurrentUrl().contains("checkout-step-one.html") || driver.getCurrentUrl().contains("inventory.html") || driver.getCurrentUrl().contains("cart.html"), 
-            "User is blocked from Overview");
-        Assert.assertTrue(driver.findElement(By.cssSelector("[data-test='error']")).isDisplayed(), "Error should be displayed to user");
+        Assert.assertTrue(driver.getCurrentUrl().contains("checkout-step-one.html")
+                || driver.getCurrentUrl().contains("inventory.html") || driver.getCurrentUrl().contains("cart.html"),
+                "User is blocked from Overview");
+        Assert.assertTrue(driver.findElement(By.cssSelector("[data-test='error']")).isDisplayed(),
+                "Error should be displayed to user");
     }
 
 }
