@@ -1,0 +1,16 @@
+pageobjects\CheckoutStepTwoPage.class
+pageobjects\CheckoutCompletePage.class
+pageobjects\InventoryPage.class
+tests\InventoryTests.class
+utils\Utils.class
+pageobjects\CheckoutStepOnePage.class
+tests\BaseTest.class
+tests\ProductTest.class
+pageobjects\BasePage.class
+pageobjects\CartPage.class
+tests\CheckoutTests.class
+tests\MenuTests.class
+tests\LoginTests.class
+pageobjects\ProductPage.class
+pageobjects\LoginPage.class
+pageobjects\MenuPage.class
